@@ -8,6 +8,7 @@
 {% url 'logout' as logout %}
 {% url 'notifications:show-notifications' as path_to_all_notifications %}
 {% url 'product' as path_to_product %}
+
 {% block main_head %}
 
 <style type="text/css">
@@ -58,18 +59,21 @@
 
 </style>
 {% endblock main_head %}
+{% if request.user.is_authenticated %}
+
 <div class="ui inverted menu nav mb-7" style="margin: 0px;">
    <span id="showsidebar"class="_icon">&equiv;</span>
     <div class="ui left demo vertical inverted sidebar labeled icon menu" style="width:150px;">
-  <a class="item" href="{{path_to_home}}">
+  <a class="item" href="{% url 'posts:main-post-view' %}">
     <i class="home icon"></i>
     Home
   </a>
-  <a class="item" href="{{path_to_product}}">
+
+  <a class="item" href="{% url 'product:productlist' %}">
     <i class="block layout icon"></i>
     Products
   </a>
-  <a class="item">
+  <a class="item" href="{% url 'profiles:myfriendlist' %}">
     <i class="smile icon"></i>
     Friends
   </a>
@@ -78,9 +82,9 @@
 
   <div class="ui container">
 
-    {% if request.user.is_authenticated %}
 
-    <a href="{{path_to_posts}}" class="{% if request.path == path_to_posts %}active{% endif %} item">
+
+    <a href="{% url 'posts:main-post-view' %}" class="{% if request.path == path_to_posts %}active{% endif %} item">
         Home
     </a>
        <a href="{{path_to_all_profiles}}" class="{% if request.path == path_to_all_profiles %}active{% endif %} item" style="margin-left: 30px">

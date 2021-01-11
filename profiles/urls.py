@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from .views import ( 
     my_profile_view, 
     invites_received_view, 
@@ -10,6 +10,7 @@ from .views import (
     remove_from_friends,
     accept_invatation,
     reject_invatation,
+    FriendListView,
 )
 
 app_name = 'profiles'
@@ -24,4 +25,5 @@ urlpatterns = [
     path('<slug>/', ProfileDetailView.as_view(), name='profile-detail-view'),
     path('my-invites/acctept/', accept_invatation, name='accept-invite'),
     path('my-invites/reject/', reject_invatation, name='reject-invite'),
+    re_path(r'^friendlist', FriendListView.as_view(), name='myfriendlist'),
 ]
