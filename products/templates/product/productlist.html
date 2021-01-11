@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main_head %}
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+<style>
+	.spacer {
+    height: 50px;
+}
+</style>
+<script>
+    $('.slider').glide({
+      autoplay: false,
+      arrowsWrapperClass: 'slider-arrows',
+      arrowRightText: '',
+      arrowLeftText: ''
+});
+</script>
+{% endblock main_head %}
+{% block content %}
+<div class="spacer"></div>
+
+<!-- header -->
+<div class="ui container pad-top-30 pad-bottom-30">
+	<div class="center aligned segment">
+		<div class="ui horizontal divider">Monthly Specials</div>
+	</div>
+</div>
+
+<div class="spacer"></div>
+
+<!-- cards -->
+
+<div class="ui container">
+
+	<div class="ui four column grid">
+
+		<div class="row">
+			{% for product in qs %}
+
+			<div class="column">
+				<div class="ui card">
+					<div class="image">
+						<a class="ui red right ribbon label">-50%</a>
+						<img  src="{{product.image1.url}}" />
+					</div>
+					<div class="content">
+						<a class="header">{{product.product_name}}</a>
+						<div class="description">
+							{{product.product_description}}
+						</div>
+					</div>
+					<div class="extra content">
+						<a class="ui teal tag label">{{product.price}}</a>
+
+					</div>
+				</div>
+			</div>
+			<div class="spacer"></div>
+			{% endfor %}
+		</div>
+
+	</div>
+</div>
+
+
+
+{% endblock content %}
+{% block scripts %}
+
+{% endblock scripts %}
+
+
+
