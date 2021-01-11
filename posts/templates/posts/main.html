@@ -52,11 +52,18 @@
     <div class="eleven wide column">
 
 
-        {% for obj in qs %}
-        {% for friend in profile.get_friends %}
-             {% ifequal obj.author.user friend %}
 
-        <div class="ui fluid card">
+
+
+
+
+            {% if profile.get_friends_no > 0 %}
+            {% for obj in qs %}
+            {% for friend in profile.get_friends %}
+
+             {% if obj.author.user == friend %}
+
+               <div class="ui fluid card">
             <div class="content">
                 <div class="right floated meta">
                 <div class="ui grid">
@@ -148,9 +155,15 @@
                 </form>
             </div>
         </div>
-        {% else %}
-        {% ifequal request.user obj.author.user %}
-        <div class="ui fluid card">
+            {% endif %}
+
+           {% endfor %}
+             {% endfor %}
+
+           {% else %}
+        {% for obj in qs %}
+          {% ifequal request.user obj.author.user %}
+                <div class="ui fluid card">
             <div class="content">
                 <div class="right floated meta">
                 <div class="ui grid">
@@ -242,12 +255,16 @@
                 </form>
             </div>
         </div>
-        {% endifequal %}
-      {% endifequal %}
-
+         {% endifequal %}
         {% endfor %}
 
-        {% endfor %}
+
+
+
+
+
+
+        {% endif %}
     </div>
 <!--    <div class="five wide column">-->
 <!--        <div class="ui segment">-->
