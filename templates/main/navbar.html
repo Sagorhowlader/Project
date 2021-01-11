@@ -1,0 +1,146 @@
+{% url 'home-view' as path_to_home %}
+{% url 'posts:main-post-view' as path_to_posts %}
+{% url 'profiles:my-profile-view' as path_to_my_profile %}
+{% url 'profiles:my-invites-view' as path_to_my_invites %}
+{% url 'profiles:invite-profiles-view' as path_to_invites %}
+{% url 'profiles:all-profiles-view' as path_to_all_profiles %}
+{% url 'profiles:search-profile' as search_profile %}
+{% url 'logout' as logout %}
+{% url 'notifications:show-notifications' as path_to_all_notifications %}
+{% url 'product' as path_to_product %}
+{% block main_head %}
+
+<style type="text/css">
+     ._nav {
+            position: fixed;
+            left: -16em;
+            top: 0;
+            bottom: 0;
+            background-color: #FFFFFF;
+            border-right: 50px solid rgb(33 133 208);
+            z-index: 1;
+            cursor: pointer;
+        }
+  ._icon {
+            position: absolute;
+            margin-top: 20px;
+            padding-left:30px;
+            display: block;
+            font-size: 30pt;
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Carrois Gothic', sans-serif;
+            cursor: pointer;
+            position: fixed;
+          }
+           ._nav a:hover, ._nav a:focus {
+            color: #fff;
+            background-color: #4F514E;
+        }
+
+         ._nav ul {
+            width: 14em;
+            margin: 0;
+            padding: 1em;
+            list-style-type: none;
+        }
+         ._nav ul li {
+                width: 100%;
+                text-align: left;
+                padding: 4px 4px;
+                margin-top: 5px;
+                color: #fff;
+                font-size: 20px;
+                float: left; !important
+               }
+
+
+
+</style>
+{% endblock main_head %}
+<div class="ui inverted menu nav mb-7" style="margin: 0px;">
+   <span id="showsidebar"class="_icon">&equiv;</span>
+    <div class="ui left demo vertical inverted sidebar labeled icon menu" style="width:150px;">
+  <a class="item" href="{{path_to_home}}">
+    <i class="home icon"></i>
+    Home
+  </a>
+  <a class="item" href="{{path_to_product}}">
+    <i class="block layout icon"></i>
+    Products
+  </a>
+  <a class="item">
+    <i class="smile icon"></i>
+    Friends
+  </a>
+</div>
+
+
+  <div class="ui container">
+
+    {% if request.user.is_authenticated %}
+
+    <a href="{{path_to_posts}}" class="{% if request.path == path_to_posts %}active{% endif %} item">
+        Home
+    </a>
+       <a href="{{path_to_all_profiles}}" class="{% if request.path == path_to_all_profiles %}active{% endif %} item" style="margin-left: 30px">
+       Find Friends
+     </a>
+    {% endif %}
+<!--    <a href="{{path_to_invites}}" class="{% if request.path == path_to_invites %}active{% endif %} item">-->
+<!--                        Send Invites-->
+<!--   </a>-->
+
+    <div class="right menu">
+        {% if request.user.is_authenticated %}
+
+             <div class="item" style="margin-right:20px">
+              <form action="{{search_profile}}" method="get">
+
+                <div class="ui action left icon input">
+                <input class="prompt" type="text" name="q" placeholder="name of a friend...">
+                <i class="search icon"></i>
+                <button type='submit' class="ui button">Search</button>
+                </div>
+            </form>
+            </div>
+            <a href="{{path_to_my_invites}}" class="{% if request.path == path_to_my_invites %}active{% endif %} item">
+
+                 <i class="fas fa-user-friends"></i>
+                <sup style="padding:0px; margin:0px; font-size:15px;">{{invites_num}}</sup>
+            </a>
+
+            <a href="{{path_to_all_notifications}}" class="{% if request.path == path_to_all_notifications %}active{% endif %} item">
+
+                <i class="bell icon"></i>
+                <sup style="padding:0px; margin:0px; font-size:15px;">{{invites_num}}</sup>
+            </a>
+            <div style="padding-left:20x;">
+            <a href="{{path_to_my_profile}}" class="{% if request.path == path_to_my_profile %}active{% endif %} item">
+                <img src={{picture.url}} class="ui avatar image">&nbsp;
+                 {{ request.user }}
+            </a>
+            </div>
+
+            <a href="{{logout}}" class="ui item" style="padding-bottom:22px">
+                Logout
+            </a>
+        {% else %}
+        <a href="" class="ui item">
+                Login
+            </a>
+        {% endif %}
+    </div>
+  </div>
+</div>
+{% block scripts %}
+
+<script>
+$('#showsidebar').click(function(){
+$('.ui.labeled.icon.sidebar')
+  .sidebar('toggle')
+;
+
+});
+</script>
+{% endblock scripts %}
