@@ -121,6 +121,19 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
         context['len_posts'] = True if len(self.get_object().get_all_authors_posts()) > 0 else False
         return context
 
+@login_required
+def search_profile(request):
+    query = request.GET.get('q',None)
+
+    obj= Profile.objects.filter(
+        Q(first_name__icontains=query) |  Q(last_name=query)
+        | Q(slug__icontains=query)
+
+    )
+
+    context = {'object_list': obj}
+    print(context)
+    return render(request, 'profiles/profile_list.html', context)
 class FriendListView(LoginRequiredMixin, ListView):
     model = Profile
     template_name = 'profiles/profile_list.html'

@@ -11,6 +11,7 @@ from .views import (
     accept_invatation,
     reject_invatation,
     FriendListView,
+    search_profile,
 )
 
 app_name = 'profiles'
@@ -25,5 +26,6 @@ urlpatterns = [
     path('<slug>/', ProfileDetailView.as_view(), name='profile-detail-view'),
     path('my-invites/acctept/', accept_invatation, name='accept-invite'),
     path('my-invites/reject/', reject_invatation, name='reject-invite'),
-    re_path(r'^friendlist', FriendListView.as_view(), name='myfriendlist'),
+    re_path(r'^s/friendlist/', FriendListView.as_view(), name='myfriendlist'),
+    re_path('s/search-profile/', search_profile, name='search-profile'),
 ]

@@ -1,6 +1,9 @@
 
 from django.db import models
 from django.core.validators import FileExtensionValidator
+from django.db.models.signals import post_save
+
+
 from profiles.models import Profile
 
 
@@ -41,6 +44,12 @@ class Comment(models.Model):
     def __str__(self):
         return f"{self.body}-Comment by-{self.user}"
 
+    # def user_comment_post(sender, instance, *args, **kwargs):
+    #     commnet = instance
+    #     post = commnet.post
+    #     sender = commnet.user
+    #     notify = Notification(post=post, sender=sender, user=post.user, notification_type=1)
+    #     notify.save()
 
 LIKE_CHOICES = (
     ('Like', 'Like'),
@@ -57,3 +66,12 @@ class Like(models.Model):
 
     def __str__(self):
         return f"{self.user}-{self.post}-{self.value}"
+    def user_liked_post(sender, instance, *args, **kwargs):
+        like = instance
+        post = like.Post
+        sender = like.user
+        notify = Notification(post=post, sender=sender, user=post.user, notification_type=1)
+        notify.save()
+
+# post_save.connect(Like.user_liked_post, sender=Like)
+# # post_save.connect(Comment.user_comment_post, sender=Comment)

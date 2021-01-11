@@ -114,10 +114,10 @@
                 <sup style="padding:0px; margin:0px; font-size:15px;">{{invites_num}}</sup>
             </a>
 
-            <a href="{{path_to_all_notifications}}" class="{% if request.path == path_to_all_notifications %}active{% endif %} item">
+            <a href="{% url 'notifications:show-notifications' %}" class="{% if request.path == path_to_all_notifications %}active{% endif %} item">
 
                 <i class="bell icon"></i>
-                <sup style="padding:0px; margin:0px; font-size:15px;">{{invites_num}}</sup>
+                <sup style="padding:0px; margin:0px; font-size:15px;"></sup>
             </a>
             <div style="padding-left:20x;">
             <a href="{{path_to_my_profile}}" class="{% if request.path == path_to_my_profile %}active{% endif %} item">

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}main page{% endblock title %}
+{% block main_head %}
+
+{% endblock main_head %}
+
+
+
+
+{% block content %}
+
+<div class="ui cards">
+    {% for noti in notifications %}
+     <div class="card" style="width:100%">
+         <div class="content">
+       <img class="right floated mini ui image" src="{{noti.sender.profile.avatar.url}}">
+       <div class="header">
+        {{ noti.sender }} {{ noti.sender.profile.last_name }} <p> <i class="fas fa-thumbs-up"></i> Liked your post</p> "{{noti.post.content}}"
+      </div>
+
+      <div class="description">
+
+
+             <strong><small>{{ noti.date }}</small></strong>
+      </div>
+    </div>
+
+  </div>
+{% endfor %}
+</div>
+{% endblock content %}
+
+
+
+{% block scripts %}
+
+
+
+{% endblock scripts %}
