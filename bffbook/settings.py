@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'notifications',
     'admistration',
 
+
 ]
 
 LOGIN_URL = '/admin/'
