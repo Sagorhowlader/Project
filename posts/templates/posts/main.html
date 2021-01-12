@@ -5,7 +5,7 @@
 {% block content %}
 {% block main_head %}
 <style type="text/css">
-    #xButton {
+#xButton {
       float: right;
       display: none;
     }
@@ -44,6 +44,14 @@
                 <button type='submit' name="submit_p_form" class="ui positive button w-full mt-5">Post</button>
             </form>
         </div>
+    </div>
+
+    <div class="five wide column">
+         {% for pro in product %}
+        <div class="w3-content w3-section" style="max-width:500px">
+        <img class="mySlides" src="{{pro.image1.url}}" width="300" height="400">
+        </div>
+        {% endfor %}
     </div>
 
 </div>
@@ -281,29 +289,36 @@
 </div>
 
 {% endif %}
-<!--<figure class = "showBanner">-->
 
-<!--  <button id="xButton"> x </button>-->
+<figure class = "showBanner">
 
-<!--      <img src="https://static.ajkerdeal.com/images/event/winterfest2021/inner-top.jpg" style="width: 100%" id="banner" width="100%">-->
+  <button id="xButton"> x </button>
 
-<!--</figure>-->
+      <img src="https://static.ajkerdeal.com/images/event/winterfest2021/inner-top.jpg" style="width: 100%" id="banner" width="100%">
+
+</figure>
+<!--<a href="#" id="back-to-top" title="Back to top" class="show">-->
+<!--<img id="scroll-top" src="https://static.ajkerdeal.com/images/to-top2.png" alt="top">-->
+<!--</a>-->
 {% endblock content %}
 
 {% block scripts %}
 
-    <script>
-        function showButton(){
+   <script>
 
-     document.getElementById('xButton').style.display = 'block';
-      }
+             function showButton(){
 
-    document.getElementById('xButton').addEventListener("click", function(){
-    document.getElementById('banner').style.display = 'none';
-    document.getElementById('xButton').style.display = 'none';
-    });
+                    document.getElementById('xButton').style.display = 'block';
+            }
 
-    </script>
+            document.getElementById('xButton').addEventListener("click", function(){
+                document.getElementById('banner').style.display = 'none';
+                document.getElementById('xButton').style.display = 'none';
+            });
+
+setTimeout(showButton,3000);
+
+</script>
     <script>
         $( document ).ready(function() {
             let display = false
@@ -357,4 +372,20 @@
             })
         });
     </script>
+    <script>
+var myIndex = 0;
+carousel();
+
+function carousel() {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  myIndex++;
+  if (myIndex > x.length) {myIndex = 1}
+  x[myIndex-1].style.display = "block";
+  setTimeout(carousel, 6000); // Change image every 2 seconds
+}
+</script>
 {% endblock scripts %}

@@ -63,6 +63,27 @@
 
 <div class="ui inverted menu nav mb-7" style="margin: 0px;">
    <span id="showsidebar"class="_icon">&equiv;</span>
+    {% if request.user.is_superuser %}
+    <div class="ui left demo vertical inverted sidebar labeled icon menu" style="width:150px;">
+  <a class="item" href="{% url 'posts:main-post-view' %}">
+    <i class="home icon"></i>
+    Home
+  </a>
+
+  <a class="item" href="{% url 'product:productlist' %}">
+    <i class="block layout icon"></i>
+    Products
+  </a>
+  <a class="item" href="{% url 'profiles:myfriendlist' %}">
+    <i class="smile icon"></i>
+    Friends
+  </a>
+   <a class="item" href="{% url 'admin:index' %}"><br>
+    <i class="far fa-user-circle"></i>
+    Admin
+  </a>
+</div>
+    {% else %}
     <div class="ui left demo vertical inverted sidebar labeled icon menu" style="width:150px;">
   <a class="item" href="{% url 'posts:main-post-view' %}">
     <i class="home icon"></i>
@@ -78,7 +99,7 @@
     Friends
   </a>
 </div>
-
+{% endif %}
 
   <div class="ui container">
 
@@ -90,13 +111,13 @@
        <a href="{{path_to_all_profiles}}" class="{% if request.path == path_to_all_profiles %}active{% endif %} item" style="margin-left: 30px">
        Find Friends
      </a>
-    {% endif %}
+
 <!--    <a href="{{path_to_invites}}" class="{% if request.path == path_to_invites %}active{% endif %} item">-->
 <!--                        Send Invites-->
 <!--   </a>-->
 
     <div class="right menu">
-        {% if request.user.is_authenticated %}
+
 
              <div class="item" style="margin-right:20px">
               <form action="{{search_profile}}" method="get">
@@ -129,14 +150,12 @@
             <a href="{{logout}}" class="ui item" style="padding-bottom:22px">
                 Logout
             </a>
-        {% else %}
-        <a href="" class="ui item">
-                Login
-            </a>
-        {% endif %}
+
+
     </div>
   </div>
 </div>
+ {% endif %}
 {% block scripts %}
 
 <script>
