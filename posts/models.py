@@ -67,11 +67,7 @@ class Like(models.Model):
     def __str__(self):
         return f"{self.user}-{self.post}-{self.value}"
     def user_liked_post(sender, instance, *args, **kwargs):
-        like = instance
-        post = like.Post
-        sender = like.user
-        notify = Notification(post=post, sender=sender, user=post.user, notification_type=1)
-        notify.save()
+        print("Hello")
 
-# post_save.connect(Like.user_liked_post, sender=Like)
+post_save.connect(Like.user_liked_post, sender=Like)
 # # post_save.connect(Comment.user_comment_post, sender=Comment)

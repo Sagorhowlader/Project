@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}main page{% endblock title %}
+{% block title %}Main Page{% endblock title %}
 
 {% block content %}
 {% block main_head %}
 <style type="text/css">
-    #xButton {
+#xButton {
       float: right;
       display: none;
     }
@@ -14,11 +14,11 @@
     position: fixed;
     left: 0;
     bottom: 0;
-    width: 100%;
+    width: 50%;
     text-align: center;
     margin-bottom: 0px;
-    margin-left: 0px;
-    padding-bottom: 0px
+    margin-right: 20x;
+<!--    padding-bottom: 0px-->
     }
 
 </style>
@@ -46,6 +46,14 @@
         </div>
     </div>
 
+    <div class="five wide column">
+         {% for pro in product %}
+        <div class="w3-content w3-section" style="max-width:500px">
+        <img class="mySlides" src="{{pro.image1.url}}" width="300" height="400">
+        </div>
+        {% endfor %}
+    </div>
+
 </div>
 
 <div class="ui grid">
@@ -56,8 +64,9 @@
 
 
 
-            
-            {% if profile.get_friends <=0 %}
+
+            {% if profile.get_friends_no > 0 %}
+            {% for obj in qs %}
             {% for friend in profile.get_friends %}
 
              {% if obj.author.user == friend %}
@@ -154,9 +163,15 @@
                 </form>
             </div>
         </div>
+            {% endif %}
 
-            {% else %}
-             <div class="ui fluid card">
+           {% endfor %}
+             {% endfor %}
+
+           {% else %}
+        {% for obj in qs %}
+          {% ifequal request.user obj.author.user %}
+                <div class="ui fluid card">
             <div class="content">
                 <div class="right floated meta">
                 <div class="ui grid">
@@ -248,14 +263,16 @@
                 </form>
             </div>
         </div>
-
-
-             {% endif %}
-
-
+         {% endifequal %}
         {% endfor %}
 
-        {% endfor %}
+
+
+
+
+
+
+        {% endif %}
     </div>
 <!--    <div class="five wide column">-->
 <!--        <div class="ui segment">-->
@@ -272,29 +289,37 @@
 </div>
 
 {% endif %}
-<!--<figure class = "showBanner">-->
 
-<!--  <button id="xButton"> x </button>-->
+<figure class = "showBanner">
 
-<!--      <img src="https://static.ajkerdeal.com/images/event/winterfest2021/inner-top.jpg" style="width: 100%" id="banner" width="100%">-->
-
-<!--</figure>-->
+  <button id="xButton"> x </button>
+    <div id="banner">
+      <img src="https://static.ajkerdeal.com/images/event/winterfest2021/inner-top.jpg" style="margin-right:110% margin-bottom:0 !important"   width="100%">
+      <img src="https://static.ajkerdeal.com/images/event/winterfest/Inner-Top.jpg" style="margin-left:110%  !important"  width="100%" >
+    </div>
+</figure>
+<!--<a href="#" id="back-to-top" title="Back to top" class="show">-->
+<!--<img id="scroll-top" src="https://static.ajkerdeal.com/images/to-top2.png" alt="top">-->
+<!--</a>-->
 {% endblock content %}
 
 {% block scripts %}
 
-    <script>
-        function showButton(){
+   <script>
 
-     document.getElementById('xButton').style.display = 'block';
-      }
+             function showButton(){
 
-    document.getElementById('xButton').addEventListener("click", function(){
-    document.getElementById('banner').style.display = 'none';
-    document.getElementById('xButton').style.display = 'none';
-    });
+                    document.getElementById('xButton').style.display = 'block';
+            }
 
-    </script>
+            document.getElementById('xButton').addEventListener("click", function(){
+                document.getElementById('banner').style.display = 'none';
+                document.getElementById('xButton').style.display = 'none';
+            });
+
+setTimeout(showButton,3000);
+
+</script>
     <script>
         $( document ).ready(function() {
             let display = false
@@ -348,4 +373,21 @@
             })
         });
     </script>
+    <script>
+var myIndex = 0;
+carousel();
+
+function carousel() {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  myIndex++;
+  if (myIndex > x.length) {myIndex = 1}
+  x[myIndex-1].style.display = "block";
+  setTimeout(carousel, 6000); // Change image every 2 seconds
+}
+</script>
 {% endblock scripts %}
+© 2021 GitHub, Inc.

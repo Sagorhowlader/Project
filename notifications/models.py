@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-from posts.models import Post
+from django.db.models.signals import post_save
+
+from posts.models import Post,Like,Comment
 
 
 # Create your models here.
@@ -15,3 +17,5 @@ class Notification(models.Model):
     text_preview = models.CharField(max_length=100, blank=True)
     date = models.DateTimeField(auto_now_add=True)
     is_seen = models.BooleanField(default=False)
+
+post_save.connect(Like.user_liked_post, sender=Like)

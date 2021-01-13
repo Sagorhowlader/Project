@@ -18,11 +18,12 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import registerPage,login,logoutUser
+import notifications.urls
 admin.site.site_header="Admin Login"
 admin.site.site_title="Admin | Dashboard"
 admin.site.index_title="Welcome to admin panel"
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls,name='admin'),
     path('', login, name='login'),
     path('register/',registerPage,name='register'),
     path('profiles/', include('profiles.urls', namespace='profiles')),
@@ -30,7 +31,7 @@ urlpatterns = [
     path('posts/', include('posts.urls', namespace='posts')),
     path('login/',login,name='login'),
     path('logout/',logoutUser,name='logout'),
-    path('notifications/', include('notifications.urls',namespace='notifications')),
+    path('notifications/', include(notifications.urls, namespace='notifications')),
 
 
 ]
