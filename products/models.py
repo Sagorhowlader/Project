@@ -55,6 +55,7 @@ class Product(models.Model):
 class Advertisement(models.Model):
     name = models.CharField(max_length=50, blank=False)
     product = models.ManyToManyField(Product, verbose_name="Product", related_name='products')
+    image= models.ImageField(upload_to='advertise', default="", null=True)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
 
