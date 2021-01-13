@@ -26,7 +26,6 @@
 
 
 {% if profile.check_block  %}
-
 <h1>You are blocked</h1>
 {% else %}
 
@@ -58,13 +57,6 @@
 
 <div class="ui grid">
     <div class="eleven wide column">
-
-
-
-
-
-
-
             {% if profile.get_friends_no > 0 %}
             {% for obj in qs %}
             {% for friend in profile.get_friends %}
@@ -152,7 +144,98 @@
 
                     {% endfor %}
                 {% endif %}
+                </div>
 
+                <form action="" method="POST"class='ui fluid form'>
+                    {% csrf_token %}
+                    <input type="hidden" name="post_id" value={{obj.id}}>
+                    {{ c_form }}
+                    <button type="submit" name="submit_c_form" class="ui primary button mt-5 w-full">Send</button>
+                </form>
+            </div>
+        </div>
+                {% else %}
+                <div class="ui fluid card">
+            <div class="content">
+                <div class="right floated meta">
+                <div class="ui grid">
+                    <div class="row">
+                        {% ifequal request.user obj.author.user %}
+                            <div class="ui dropdown">
+  <div class="text"></div>
+  <i class="dropdown icon"></i>
+  <div class="menu">
+      <div class="item"> <a href="{% url 'posts:post-update' obj.pk %}">Update</a></div>
+    <div class="item">
+
+        <a href="{% url 'posts:post-delete' obj.pk %}">Deleted</a>
+    </div>
+
+  </div>
+</div>
+
+                        {% endifequal %}
+                    </div>
+                </div>
+
+                </div>
+                <img class="ui avatar image" src={{obj.author.avatar.url}}>
+                {{ obj.author.user }} - {{ obj.created|timesince}} ago
+            </div>
+            <div class="ui fluid image">
+                {% if obj.image %}
+                    <img src={{obj.image.url}} style="max-height:300px">
+                {% endif %}
+            </div>
+
+                {% if obj.video %}
+                  <video src="{{post.video.url}}" controls height="100%" width="100%"></video>
+                {% endif %}
+
+            <div class="content">
+                <p> {{ obj.content|urlize }} </p>
+                <div class="right floated">
+                    <form action="{% url 'posts:like-post-view' %}" method="POST" class='like-form' id='{{obj.id}}'>
+                        {% csrf_token %}
+                        <input type="hidden" name="post_id" value={{obj.id}}>
+
+                            <button type="submit" class="ui button like-btn{{obj.id}}">
+                                {% if profile not in obj.liked.all %}
+                                    Like
+                                {% else %}
+                                    Unlike
+                                {% endif %}
+                            </button>
+                            <div class="ui grid">
+                                <div class="column">
+                                    <div class="like-count{{obj.id}}"> {{obj.num_likes}} </div>
+                                </div>
+                                <div class="column">
+                                    likes
+                                </div>
+                            </div>
+                    </form>
+                </div>
+                <i class="comment icon"></i>
+                <span> {{ obj.num_comments }} comments</span>
+            </div>
+            <div class="extra content">
+                <div class="mb-5">
+
+                </div>
+                <button class="cmt_btn ui button mb-5">show / hide comments</button>
+                <div class="comment-box">
+                {% if obj.comment_set.all %}
+                    {% for c in obj.comment_set.all %}
+
+                        <div class="ui segment mb-5">
+                            <img class="ui avatar image" src={{c.user.avatar.url}}>
+                            <span>{{ c.user }}</span>
+                            <div class='mt-5'>{{ c.body }}</div>
+                        </div>
+
+                    {% endfor %}
+                {% endif %}
                 </div>
 
                 <form action="" method="POST"class='ui fluid form'>
@@ -169,6 +252,7 @@
              {% endfor %}
 
            {% else %}
+
         {% for obj in qs %}
           {% ifequal request.user obj.author.user %}
                 <div class="ui fluid card">
@@ -274,18 +358,7 @@
 
         {% endif %}
     </div>
-<!--    <div class="five wide column">-->
-<!--        <div class="ui segment">-->
-<!--            {% if post_added %}-->
-<!--                <div class="ui green message">Post added</div>-->
-<!--            {% endif %}-->
-<!--            <form action="" method="POST" class='ui form' enctype="multipart/form-data">-->
-<!--                {% csrf_token %}-->
-<!--                {{p_form}}-->
-<!--                <button type='submit' name="submit_p_form" class="ui positive button w-full mt-5">Send</button>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
+
 </div>
 
 {% endif %}

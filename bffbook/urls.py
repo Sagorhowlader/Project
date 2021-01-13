@@ -31,7 +31,7 @@ urlpatterns = [
     path('posts/', include('posts.urls', namespace='posts')),
     path('login/',login,name='login'),
     path('logout/',logoutUser,name='logout'),
-    path('notifications/', include(notifications.urls, namespace='notifications')),
+    path('notifications/', include('notifications.urls', namespace='notifications')),
 
 
 ]

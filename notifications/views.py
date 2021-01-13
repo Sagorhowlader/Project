@@ -3,14 +3,15 @@ from django.template import loader
 from django.http import HttpResponse
 
 from notifications.models import Notification
-
+from profiles.models import Profile
 
 # Create your views here.
 
 def ShowNOtifications(request):
     user = request.user
-    notifications = Notification.objects.filter(user=user).order_by('-date')
-    Notification.objects.filter(user=user, is_seen=False).update(is_seen=True)
+    profile=Profile.objects.get(user=user)
+    notifications = Notification.objects.filter(user=profile).order_by('-date')
+    Notification.objects.filter(user=profile, is_seen=False).update(is_seen=True)
 
     template = loader.get_template('notifications/notificationslist.html')
 

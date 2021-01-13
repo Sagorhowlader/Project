@@ -1,9 +1,9 @@
 
 from django.db import models
 from django.core.validators import FileExtensionValidator
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 
-
+from notifications.models import Notification
 from profiles.models import Profile
 
 
@@ -22,7 +22,7 @@ class Post(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='posts')
 
     def __str__(self):
-        return f"{self.content[:20]}--post by--{self.author}"
+        return f"{self.content[:20]}"
 
     def num_likes(self):
         return self.liked.all().count()
@@ -42,7 +42,7 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.body}-Comment by-{self.user}"
+        return f"{self.body}"
 
     # def user_comment_post(sender, instance, *args, **kwargs):
     #     commnet = instance
@@ -65,9 +65,25 @@ class Like(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user}-{self.post}-{self.value}"
+        return f"{self.user}"
+
     def user_liked_post(sender, instance, *args, **kwargs):
-        print("Hello")
+        like = instance
+        post= like.post
+        send = like.user
+        user = post.author
+        notify = Notification(post=post, sender=send, user=user, notification_type=1)
+        notify.save()
+
+    def user_unlike_post(sender, instance, *args, **kwargs):
+        like = instance
+        post = like.post
+        send = like.user
+        user = post.author
+        notify = Notification.objects.filter(post=post, sender=send,user=user, notification_type=1)
+        notify.delete()
+
 
 post_save.connect(Like.user_liked_post, sender=Like)
+post_delete.connect(Like.user_unlike_post, sender=Like)
 # # post_save.connect(Comment.user_comment_post, sender=Comment)
