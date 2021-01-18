@@ -25,4 +25,10 @@ class ProductProfileDetailView(LoginRequiredMixin, DetailView):
         context = {'qs': obj}
         return context
 
-#
+#@login_required
+def AdvertiseListView(request):
+    qs = Advertisement.objects.all()
+
+    context = {'qs': qs}
+
+    return render(request, 'product/eventlist.html', context)
