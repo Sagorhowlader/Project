@@ -1,0 +1,12 @@
+bffbook/__pycache__/*
+.idea/*
+admistration/__pycache__/*
+__pycache__/*
+posts/__pycache__/*
+*.pyc
+.vscode/*
+.vs/*
+.settings.py.swp
+products/__pycache__/*
+profiles/__pycache__/*
+automation/.pytest_cache/
